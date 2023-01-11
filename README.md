@@ -206,4 +206,57 @@ Before using this API, you must have an [Apple Developer account](https://develo
 
 
 
+## API
+
+#### .geocode(options [object])
+
+Fetch geocoded data about an address.
+
+**options**: supports keys
+- `q` \[required\] - The address to geocode. IE: 1 Apple Park, Cupertino, CA
+- `limitToCountries` \[optional\] - A comma-separated list of country codes to limit the results to IE: US,CA.
+- `lang` \[optional\] - The language the server should use when returning the response, specified using a BCP 47 language code. IE: en-US.
+- `searchLocation` \[optional\] - A location defined as a hint. Specify the location as a comma-separated string containing the latitude and longitude. IE: 37.78,-122.42.
+- `searchRegion` \[optional\] - A region defined as a hint. Specify the region specified as a comma-separated string that describes the region in the form north-latitude, east-longitude, south-latitude, west-longitude. IE: 38,-122.1,37.5,-122.5.
+- `userLocation` \[optional\] - The location of the user, specified as a comma-separated string that contains the latitude and longitude. IE: 37.78,-122.42.
+
+
+**response**
+```
+{
+  "results": [
+    {
+      country: string;
+      countryCode: string;
+      displayMapRegion: {
+        eastLongitude: number;
+        northLatitude: number;
+        southLatitude: number;
+        westLongitude: number;
+      };
+      formattedAddressLines: string[];
+      name: string;
+      coordinate: {
+        latitude: number;
+        longitude: number;
+      };
+      structuredAddress: {
+        administrativeArea: string;
+        administrativeAreaCode: string;
+        areasOfInterest: string[];
+        dependentLocalities: string[];
+        fullThoroughfare: string;
+        locality: string;
+        postCode: string;
+        subLocality: string;
+        subThoroughfare: string;
+        thoroughfare: string;
+      }
+    }
+  ]
+}
+```
+
+
+
 
