@@ -220,6 +220,49 @@ Fetch geocoded data about an address.
 - `searchRegion` \[optional\] - A region defined as a hint. Specify the region specified as a comma-separated string that describes the region in the form north-latitude, east-longitude, south-latitude, west-longitude. IE: 38,-122.1,37.5,-122.5.
 - `userLocation` \[optional\] - The location of the user, specified as a comma-separated string that contains the latitude and longitude. IE: 37.78,-122.42.
 
+**response**
+```
+{
+  "results": [
+    {
+      country: string;
+      countryCode: string;
+      displayMapRegion: {
+        eastLongitude: number;
+        northLatitude: number;
+        southLatitude: number;
+        westLongitude: number;
+      };
+      formattedAddressLines: string[];
+      name: string;
+      coordinate: {
+        latitude: number;
+        longitude: number;
+      };
+      structuredAddress: {
+        administrativeArea: string;
+        administrativeAreaCode: string;
+        areasOfInterest: string[];
+        dependentLocalities: string[];
+        fullThoroughfare: string;
+        locality: string;
+        postCode: string;
+        subLocality: string;
+        subThoroughfare: string;
+        thoroughfare: string;
+      }
+    }
+  ]
+}
+```
+
+#### .reverseGeocode(options [object])
+
+Fetch reverse geocoded data about coordinates.
+
+**options**: supports keys
+- `loc` \[required\] - The coordinate to reverse geocode as a comma-separated string that contains the latitude and longitude. IE: 37.3316851,-122.0300674.
+- `lang` \[optional\] - The language the server should use when returning the response, specified using a BCP 47 language code. IE: en-US.
 
 **response**
 ```
@@ -256,6 +299,47 @@ Fetch geocoded data about an address.
   ]
 }
 ```
+
+#### .eta(options [object])
+
+Returns the estimated time of arrival (ETA) and distance between starting and ending locations.
+
+**options**: supports keys
+- `origin` \[required\] - The starting point for estimated arrival time requests, specified as a comma-separated string that contains the latitude and longitude. IE: 37.331423,-122.030503.
+- `destinations` \[required\] - Destination coordinates represented as pairs of latitude and longitude separated by a vertical bar character (”|”).
+IE: 37.32556561130194,-121.94635203581443|37.44176585512703,-122.17259315798667.
+
+The parameter must specify at least one destination coordinate, but no more than 10 destinations. Specify the location as a comma-separated string that contains the latitude and longitude.
+- `transportType` \[optional\] - The mode of transportation to use when estimating arrival times.
+
+Default: Automobile
+
+Possible values: Automobile, Transit, Walking
+- `departureDate` \[optional\] - The time of departure to use in an estimated arrival time request, in ISO 8601 format in UTC time.
+IE: 2020-09-15T16:42:00Z.
+
+If you don’t specify a departure date, the server uses the current date and time when you make the request.
+- `arrivalDate` \[optional\] - The intended time of arrival in ISO 8601 format in UTC time.
+
+**response**
+```
+{
+  "etas": [
+    {
+      destination: {
+        latitude: number;
+        longitude: number;
+      };
+      distanceMeters: number;
+      expectedTravelTimeSeconds: number;
+      staticTravelTimeSeconds: number;
+      transportType: "Automobile" | "Transit" | "Walking";
+    }
+  ]
+}
+```
+
+
 
 
 
