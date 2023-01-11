@@ -340,6 +340,67 @@ If you don’t specify a departure date, the server uses the current date and ti
 ```
 
 
+#### .search(options [object])
+
+Find places by name or by specific search criteria.
+
+**options**: supports keys
+- `q` \[required\] - The place to search for. IE: eiffel tower.
+- `excludePoiCategories` \[optional\] - A comma-separated list of strings that describes the points of interest to exclude from the search results. IE: Restaurant,Cafe. See [https://developer.apple.com/documentation/applemapsserverapi/poicategory](https://developer.apple.com/documentation/applemapsserverapi/poicategory) for a list of all possible PoiCategories. 
+- `includePoiCategories` \[optional\] - A comma-separated list of strings that describes the points of interest to include in the search results. IE: Restaurant,Cafe. See [https://developer.apple.com/documentation/applemapsserverapi/poicategory](https://developer.apple.com/documentation/applemapsserverapi/poicategory) for a list of all possible PoiCategories. 
+- `limitToCountries` \[optional\] - A comma-separated list of ISO ALPHA-2 codes of the countries to limit the results to. IE: US,CA limits the search to the United States and Canada.
+- `resultTypeFilter` \[optional\] - A comma-separated list of strings that describes the kind of result types to include in the response. IE: Poi.
+
+Possible values: Poi, Address
+- `lang` \[optional\] - The language the server should use when returning the response. IE: en-US. Defaults to en-US.
+- `searchLocation` \[optional\] - A location defined as a hint. Specify the location as a comma-separated string containing the latitude and longitude. IE: 37.78,-122.42.
+- `searchRegion` \[optional\] - A region defined as a hint. Specify the region specified as a comma-separated string that describes the region in the form north-latitude,east-longitude,south-latitude,west-longitude. IE: 38,-122.1,37.5,-122.5.
+- `userLocation` \[optional\] - The location of the user, specified as a comma-separated string that contains the latitude and longitude. IE: 37.78,-122.42.
+
+**response**
+```
+{
+  "displayMapRegion": {
+    eastLongitude: number;
+    northLatitude: number;
+    southLatitude: number;
+    westLongitude: number;
+  }
+  "results": [
+    {
+      poiCategory: PoiCategory;
+      country: string;
+      countryCode: string;
+      displayMapRegion: {
+        eastLongitude: number;
+        northLatitude: number;
+        southLatitude: number;
+        westLongitude: number;
+      };
+      formattedAddressLines: string[];
+      name: string;
+      coordinate: {
+        latitude: number;
+        longitude: number;
+      };
+      structuredAddress: {
+        administrativeArea: string;
+        administrativeAreaCode: string;
+        areasOfInterest: string[];
+        dependentLocalities: string[];
+        fullThoroughfare: string;
+        locality: string;
+        postCode: string;
+        subLocality: string;
+        subThoroughfare: string;
+        thoroughfare: string;
+      }
+    }
+  ]
+}
+```
+
+
 
 
 
