@@ -16,6 +16,9 @@ class AppleMaps {
 
     this.apiClient = axios.create({
       baseURL: "https://maps-api.apple.com/v1",
+      paramsSerializer: {
+        serialize: (params) => qs.stringify(params, { arrayFormat: "comma" }),
+      },
     });
 
     this.getAccessToken();
