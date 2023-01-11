@@ -1,4 +1,14 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+import {
+  GeocodeInput,
+  GeocodeResponse,
+  ReverseGeocodeInput,
+  ReverseGeocodeResponse,
+  ETAInput,
+  ETAResponse,
+  SearchInput,
+  SearchResponse,
+} from "./globals";
 
 class AppleMaps {
   accessToken: string;

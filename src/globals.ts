@@ -93,3 +93,54 @@ interface ETA {
 interface SearchResponsePlace extends Place {
   poiCategory: PoiCategory;
 }
+
+export interface GeocodeInput {
+  q: string;
+  limitToCountries?: string[];
+  lang?: string;
+  searchLocation?: string;
+  searchRegion?: string;
+  userLocation?: string;
+}
+
+export interface ReverseGeocodeInput {
+  q: string;
+  lang?: string;
+}
+
+export interface ETAInput {
+  origin: string;
+  destinations: string[];
+  transportType?: TransportType;
+  departureDate?: string;
+  arrivalDate?: string;
+}
+
+export interface SearchInput {
+  q: string;
+  excludePoiCategories?: PoiCategory[];
+  includePoiCategories?: PoiCategory[];
+  limitToCountries?: string[];
+  resultTypeFilter?: "Poi" | "Address";
+  lang?: string;
+  searchLocation?: string;
+  searchRegion?: string;
+  userLocation?: string;
+}
+
+export interface GeocodeResponse {
+  results: Place[];
+}
+
+export interface ReverseGeocodeResponse {
+  results: Place[];
+}
+
+export interface ETAResponse {
+  etas: ETA[];
+}
+
+export interface SearchResponse {
+  displayMapRegion: MapRegion;
+  results: SearchResponsePlace[];
+}
