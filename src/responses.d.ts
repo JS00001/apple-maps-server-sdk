@@ -6,7 +6,7 @@ interface ReverseGeocodeResponse {
   response: Place[];
 }
 
-interface EstimatedArrivalResponse {
+interface ETAResponse {
   etas: ETA[];
 }
 
