@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosError, AxiosInstance } from "axios";
 import qs from "qs";
 
 class AppleMaps {
@@ -43,7 +43,14 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      throw error;
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          await this.getAccessToken();
+          return this.geocode(input);
+        } else {
+          throw error;
+        }
+      } else throw error;
     }
   }
 
@@ -60,7 +67,14 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      throw error;
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          await this.getAccessToken();
+          return this.reverseGeocode(input);
+        } else {
+          throw error;
+        }
+      } else throw error;
     }
   }
 
@@ -77,7 +91,14 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      throw error;
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          await this.getAccessToken();
+          return this.eta(input);
+        } else {
+          throw error;
+        }
+      } else throw error;
     }
   }
 
@@ -94,7 +115,14 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      throw error;
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          await this.getAccessToken();
+          return this.search(input);
+        } else {
+          throw error;
+        }
+      } else throw error;
     }
   }
 }
