@@ -1,0 +1,26 @@
+{
+  "name": "apple-maps-server-sdk",
+  "version": "1.0.0",
+  "description": "An SDK for the Apple Maps Server API",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JS00001/apple-maps-server-sdk.git"
+  },
+  "keywords": [],
+  "author": "JS00001",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JS00001/apple-maps-server-sdk/issues"
+  },
+  "homepage": "https://github.com/JS00001/apple-maps-server-sdk#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
+}
