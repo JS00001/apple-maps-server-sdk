@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import qs from "qs";
 
 class AppleMaps {
   accessToken: string;
@@ -16,9 +15,6 @@ class AppleMaps {
 
     this.apiClient = axios.create({
       baseURL: "https://maps-api.apple.com/v1",
-      paramsSerializer: {
-        serialize: (params) => qs.stringify(params, { arrayFormat: "comma" }),
-      },
     });
 
     this.getAccessToken();
@@ -41,14 +37,12 @@ class AppleMaps {
   }
 
   async geocode(input: GeocodeInput): Promise<GeocodeResponse> {
-    const params = qs.stringify(input);
-
     try {
       const response = await this.apiClient.get("/geocode", {
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
-        params,
+        params: input,
       });
 
       return response.data;
@@ -65,14 +59,12 @@ class AppleMaps {
   }
 
   async reverseGeocode(input: ReverseGeocodeInput): Promise<ReverseGeocodeResponse> {
-    const params = qs.stringify(input);
-
     try {
       const response = await this.apiClient.get("/reverseGeocode", {
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
-        params,
+        params: input,
       });
 
       return response.data;
@@ -82,21 +74,19 @@ class AppleMaps {
           await this.getAccessToken();
           return this.reverseGeocode(input);
         } else {
-          throw error;
+          throw error.response?.data;
         }
       } else throw error;
     }
   }
 
   async eta(input: ETAInput): Promise<ETAResponse> {
-    const params = qs.stringify(input);
-
     try {
       const response = await this.apiClient.get("/etas", {
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
-        params,
+        params: input,
       });
 
       return response.data;
@@ -106,21 +96,19 @@ class AppleMaps {
           await this.getAccessToken();
           return this.eta(input);
         } else {
-          throw error;
+          throw error.response?.data;
         }
       } else throw error;
     }
   }
 
   async search(input: SearchInput): Promise<SearchResponse> {
-    const params = qs.stringify(input);
-
     try {
       const response = await this.apiClient.get("/search", {
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
-        params,
+        params: input,
       });
 
       return response.data;
@@ -130,7 +118,7 @@ class AppleMaps {
           await this.getAccessToken();
           return this.search(input);
         } else {
-          throw error;
+          throw error.response?.data;
         }
       } else throw error;
     }
