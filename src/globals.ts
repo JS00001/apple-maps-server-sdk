@@ -104,7 +104,7 @@ export interface GeocodeInput {
 }
 
 export interface ReverseGeocodeInput {
-  q: string;
+  loc: string;
   lang?: string;
 }
 
