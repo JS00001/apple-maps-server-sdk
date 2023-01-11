@@ -6,9 +6,14 @@ class AppleMaps {
   authorizationToken: string;
   apiClient: AxiosInstance;
 
-  constructor(authorizationToken: string) {
+  constructor({ authorizationToken }: { authorizationToken: string }) {
     this.accessToken = "";
     this.authorizationToken = authorizationToken;
+
+    if (!authorizationToken) {
+      throw new Error("'authorizationToken' param is required");
+    }
+
     this.apiClient = axios.create({
       baseURL: "https://maps-api.apple.com/v1",
     });
