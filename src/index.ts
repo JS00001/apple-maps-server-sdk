@@ -17,6 +17,8 @@ class AppleMaps {
     this.apiClient = axios.create({
       baseURL: "https://maps-api.apple.com/v1",
     });
+
+    this.getAccessToken();
   }
 
   async getAccessToken(): Promise<undefined> {
