@@ -1,7 +1,7 @@
 
 # Apple Maps Server SDK
 
-The Apple Maps Server SDK for Node.js is a tool that helps developers access the Apple Maps API using the Node.js language. It makes it easy to search for locations, get map data, and generate directions in your Node.js apps. Additionally, it also simplifies the process of managing access tokens, making it easier for you to use the API without having to worry about managing tokens.
+The Apple Maps Server SDK is an npm package that allows easy access to the Apple Maps Server API in JavaScript and TypeScript projects. It includes features such as geocoding, estimated time of arrival, and location search and is well-documented with js/ts examples, making it simpler for developers to access the functionality provided by the API without the need for a deep-dive into Apple's documentation.
 
 ## Installation
 
