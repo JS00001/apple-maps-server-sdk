@@ -13,10 +13,12 @@ import {
 class AppleMaps {
   accessToken: string;
   authorizationToken: string;
+  accessTokenRetries: number;
   apiClient: AxiosInstance;
 
   constructor({ authorizationToken }: { authorizationToken: string }) {
     this.accessToken = "";
+    this.accessTokenRetries = 0;
     this.authorizationToken = authorizationToken;
 
     if (!authorizationToken) {
@@ -40,7 +42,7 @@ class AppleMaps {
 
       this.accessToken = response.data.accessToken;
     } catch (error) {
-      console.error(error);
+      throw error;
     }
 
     return;
@@ -59,6 +61,12 @@ class AppleMaps {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
+          if (this.accessTokenRetries > 3) {
+            throw new Error("Unable to get access token");
+          }
+
+          this.accessTokenRetries++;
+
           await this.getAccessToken();
           return this.geocode(input);
         } else {
@@ -81,6 +89,11 @@ class AppleMaps {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
+          if (this.accessTokenRetries > 3) {
+            throw new Error("Unable to get access token");
+          }
+
+          this.accessTokenRetries++;
           await this.getAccessToken();
           return this.reverseGeocode(input);
         } else {
@@ -103,6 +116,11 @@ class AppleMaps {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
+          if (this.accessTokenRetries > 3) {
+            throw new Error("Unable to get access token");
+          }
+
+          this.accessTokenRetries++;
           await this.getAccessToken();
           return this.eta(input);
         } else {
@@ -125,6 +143,11 @@ class AppleMaps {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error.response?.status === 401) {
+          if (this.accessTokenRetries > 3) {
+            throw new Error("Unable to get access token");
+          }
+
+          this.accessTokenRetries++;
           await this.getAccessToken();
           return this.search(input);
         } else {
