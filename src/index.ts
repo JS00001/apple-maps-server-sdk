@@ -144,4 +144,15 @@ class AppleMaps {
   }
 }
 
+export type {
+  GeocodeInput,
+  GeocodeResponse,
+  ReverseGeocodeInput,
+  ReverseGeocodeResponse,
+  ETAInput,
+  ETAResponse,
+  SearchInput,
+  SearchResponse,
+};
+
 export default AppleMaps;
