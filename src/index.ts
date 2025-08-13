@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+
 import {
   GeocodeInput,
   GeocodeResponse,
@@ -32,7 +33,10 @@ class AppleMaps {
     this.getAccessToken();
   }
 
-  async getAccessToken(): Promise<undefined> {
+  /**
+   * Take an authorization token and fetch an access token from apples servers
+   */
+  private async getAccessToken(): Promise<undefined> {
     try {
       const response = await this.apiClient.get("/token", {
         headers: {
@@ -48,7 +52,27 @@ class AppleMaps {
     return;
   }
 
-  async geocode(input: GeocodeInput): Promise<GeocodeResponse> {
+  private async handleError<T>(err: unknown, callback: () => Promise<T>) {
+    if (err instanceof AxiosError) {
+      if (err.response?.status === 401) {
+        if (this.accessTokenRetries > 3) {
+          throw new Error("Unable to get access token");
+        }
+
+        this.accessTokenRetries++;
+
+        await this.getAccessToken();
+        return callback();
+      }
+    }
+
+    throw err;
+  }
+
+  /**
+   * Returns the latitude and longitude of the address you specify.
+   */
+  public async geocode(input: GeocodeInput): Promise<GeocodeResponse> {
     try {
       const response = await this.apiClient.get("/geocode", {
         headers: {
@@ -59,24 +83,16 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          if (this.accessTokenRetries > 3) {
-            throw new Error("Unable to get access token");
-          }
-
-          this.accessTokenRetries++;
-
-          await this.getAccessToken();
-          return this.geocode(input);
-        } else {
-          throw error;
-        }
-      } else throw error;
+      return this.handleError(error, () => this.geocode(input));
     }
   }
 
-  async reverseGeocode(input: ReverseGeocodeInput): Promise<ReverseGeocodeResponse> {
+  /**
+   * Returns an array of addresses present at the coordinates you provide.
+   */
+  public async reverseGeocode(
+    input: ReverseGeocodeInput
+  ): Promise<ReverseGeocodeResponse> {
     try {
       const response = await this.apiClient.get("/reverseGeocode", {
         headers: {
@@ -87,23 +103,14 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          if (this.accessTokenRetries > 3) {
-            throw new Error("Unable to get access token");
-          }
-
-          this.accessTokenRetries++;
-          await this.getAccessToken();
-          return this.reverseGeocode(input);
-        } else {
-          throw error.response?.data;
-        }
-      } else throw error;
+      return this.handleError(error, () => this.reverseGeocode(input));
     }
   }
 
-  async eta(input: ETAInput): Promise<ETAResponse> {
+  /**
+   * Returns the estimated time of arrival (ETA) and distance between starting and ending locations.
+   */
+  public async eta(input: ETAInput): Promise<ETAResponse> {
     try {
       const response = await this.apiClient.get("/etas", {
         headers: {
@@ -114,23 +121,14 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          if (this.accessTokenRetries > 3) {
-            throw new Error("Unable to get access token");
-          }
-
-          this.accessTokenRetries++;
-          await this.getAccessToken();
-          return this.eta(input);
-        } else {
-          throw error.response?.data;
-        }
-      } else throw error;
+      return this.handleError(error, () => this.eta(input));
     }
   }
 
-  async search(input: SearchInput): Promise<SearchResponse> {
+  /**
+   * Find places by name or by specific search criteria.
+   */
+  public async search(input: SearchInput): Promise<SearchResponse> {
     try {
       const response = await this.apiClient.get("/search", {
         headers: {
@@ -141,19 +139,7 @@ class AppleMaps {
 
       return response.data;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          if (this.accessTokenRetries > 3) {
-            throw new Error("Unable to get access token");
-          }
-
-          this.accessTokenRetries++;
-          await this.getAccessToken();
-          return this.search(input);
-        } else {
-          throw error.response?.data;
-        }
-      } else throw error;
+      return this.handleError(error, () => this.search(input));
     }
   }
 }

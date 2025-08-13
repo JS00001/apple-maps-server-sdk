@@ -1,4 +1,3 @@
-// OBJECTS
 type PoiCategory =
   | "Airport"
   | "AirportGate"
