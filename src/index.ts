@@ -56,12 +56,14 @@ class AppleMaps {
     if (err instanceof AxiosError) {
       if (err.response?.status === 401) {
         if (this.accessTokenRetries > 3) {
+          this.accessTokenRetries = 0;
           throw new Error("Unable to get access token");
         }
 
         this.accessTokenRetries++;
 
         await this.getAccessToken();
+        this.accessTokenRetries = 0;
         return callback();
       }
     }
