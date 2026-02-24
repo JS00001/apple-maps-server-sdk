@@ -3,7 +3,6 @@
     "target": "ES6",
     "module": "esnext",
     "declaration": true,
-    "outDir": "./lib",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node"
