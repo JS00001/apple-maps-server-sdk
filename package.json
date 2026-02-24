@@ -1,9 +1,10 @@
 {
   "name": "apple-maps-server-sdk",
-  "version": "1.1.5",
+  "version": "1.1.6",
+  "type": "module",
   "description": "An SDK for the Apple Maps Server API",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
